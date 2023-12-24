@@ -81,6 +81,8 @@ function nextQuestion() {
         questionID++;
         showQuestion();
     } else {
+        document.querySelector("#question-title").textContent = "You have completed the quiz";
+        choiceBox.textContent = " ";
         console.log("You have completetd the quiz");
     }
 };
