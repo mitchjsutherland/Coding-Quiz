@@ -54,8 +54,18 @@ function timeRemaining() {
 function checkAnswer(event) {
     let button = event.target;
     let questionID = button.getAttribute("questionID");
+    let correctID = button.getAttribute("correctID");
+
     console.log(questionID);
-}
+    console.log(correctID);
+
+    if (questionID === correctID) {
+        console.log("That is correct!")
+    } else {
+        console.log("That is incorrect.")
+    };
+
+};
 
 
 function nextQuestion() {
@@ -69,6 +79,7 @@ function nextQuestion() {
         choiceBox.appendChild(choiceButton);
 
         choiceButton.setAttribute("questionID", [i]);
+        choiceButton.setAttribute("correctID", question.correctAnswer);
 
         choiceButton.addEventListener("click", checkAnswer);
     }
