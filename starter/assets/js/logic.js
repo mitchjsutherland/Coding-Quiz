@@ -8,9 +8,11 @@ let questionScreen = document.querySelector("#questions");
 let endScreen = document.querySelector("#end-screen");
 
 let timer = document.querySelector("#time");
-let countdown = 5;
+let countdown = 10;
 let intervalID;
 let choiceBox = document.querySelector('#choices');
+let userScore = 0;
+let questionID = 0;
 
 
 // function list
@@ -31,10 +33,9 @@ function init() {
     // start time
     startTimer();
     timeRemaining();
-    nextQuestion();
+    showQuestion();
 
 }
-
 
 function startTimer() {
     intervalID = setInterval(timeRemaining, 1000);
@@ -50,42 +51,63 @@ function timeRemaining() {
     }
 }
 
+function showQuestion() {
 
-function checkAnswer(event) {
-    let button = event.target;
-    let questionID = button.getAttribute("questionID");
-    let correctID = button.getAttribute("correctID");
+    // Display questions
 
-    console.log(questionID);
-    console.log(correctID);
-
-    if (questionID === correctID) {
-        console.log("That is correct!")
-    } else {
-        console.log("That is incorrect.")
-    };
-
-};
-
-
-function nextQuestion() {
-
-    let question = questionList[0];
+    let question = questionList[questionID];
     document.querySelector("#question-title").textContent = question.title;
+
+    // Clear choice box
+
+    choiceBox.textContent = " ";
+
+    // Display choices for each question
 
     for (i = 0; i < question.choices.length; i++) {
         let choiceButton = document.createElement("button");
         choiceButton.textContent = question.choices[i];
         choiceBox.appendChild(choiceButton);
 
-        choiceButton.setAttribute("questionID", [i]);
+        choiceButton.setAttribute("choiceID", [i]);
         choiceButton.setAttribute("correctID", question.correctAnswer);
 
         choiceButton.addEventListener("click", checkAnswer);
     }
 }
 
+function nextQuestion() {
+    if (questionID < questionList.length - 1) {
+        questionID++;
+        showQuestion();
+    } else {
+        console.log("You have completetd the quiz");
+    }
+};
 
+function checkAnswer(event) {
+    let button = event.target;
+    let choiceID = button.getAttribute("choiceID");
+    let correctID = button.getAttribute("correctID");
+
+    console.log(choiceID);
+    console.log(correctID);
+
+    if (choiceID === correctID) {
+        console.log("That is correct!")
+        // add point to score
+        userScore += 1;
+        // show next question
+
+    } else {
+        console.log("That is incorrect.")
+        // deduct time from time remaining
+        countdown -= 4;
+        // show next question
+    };
+
+    nextQuestion();
+};
 
 
 // choice button clicks to verify choice and show next question
