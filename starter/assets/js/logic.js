@@ -50,31 +50,32 @@ function timeRemaining() {
     }
 }
 
-function nextQuestion() {
-
-    let question = questionList[0];
-
-    document.querySelector("#question-title").textContent = question.title;
-
-    for (i = 0; i < question.choices.length; i++) {
-        let choiceButton = document.createElement("button")
-        choiceButton.textContent = question.choices[i];
-        choiceBox.appendChild(choiceButton);
-
-
-        choiceButton.addEventListener("click", checkAnswer);
-
-        setAttribute()
-
-    }
-
-}
-
 
 function checkAnswer(event) {
     let button = event.target;
-    console.log(button.dataset.);
+    let questionID = button.getAttribute("questionID");
+    console.log(questionID);
 }
+
+
+function nextQuestion() {
+
+    let question = questionList[0];
+    document.querySelector("#question-title").textContent = question.title;
+
+    for (i = 0; i < question.choices.length; i++) {
+        let choiceButton = document.createElement("button");
+        choiceButton.textContent = question.choices[i];
+        choiceBox.appendChild(choiceButton);
+
+        choiceButton.setAttribute("questionID", [i]);
+
+        choiceButton.addEventListener("click", checkAnswer);
+    }
+}
+
+
+
 
 // choice button clicks to verify choice and show next question
 
