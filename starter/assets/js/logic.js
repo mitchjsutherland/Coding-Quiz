@@ -38,6 +38,7 @@ function init() {
 };
 
 
+
 function startTimer() {
     intervalID = setInterval(timeRemaining, 1000);
 };
@@ -53,21 +54,21 @@ function timeRemaining() {
     // BUG TO BE FIXED - countdown will freeze if an incorrect answer is selected with 4 or less seconds remaining
 
     if (countdown == 0) {
+        // localStorage.setItem("userScore", countdown);
         showEndScreen();
         clearInterval(intervalID);
-        userScore = countdown;
     }
 };
 
 function stopCountdown() {
+    // localStorage.setItem("userScore", countdown);
+    userScore = countdown;
+    console.log(userScore);
     if (questionID === questionList.length - 1) {
         clearInterval(intervalID);
     }
-
-    localStorage.setItem("userScore", countdown);
-
-    // The line above has been repeated (see 58) and may be best placed within a saveUserScore function
 };
+
 
 
 function showQuestion() {
@@ -116,7 +117,6 @@ function checkAnswer(event) {
     
 };
 
-
 function showCorrect() {
     feedback.classList.toggle("hide");
     feedback.textContent = "Correct!";
@@ -129,14 +129,13 @@ function showWrong() {
     // ****** This should show on the screen for 1-2 seconds. ******
 }
 
-
 function nextQuestion() {
     if (questionID < questionList.length - 1) {
         questionID++;
         showQuestion();
     } else {
-        showEndScreen();
         stopCountdown();
+        showEndScreen();
     }
 };
 
@@ -150,10 +149,10 @@ function showEndScreen() {
     endScreen.classList.toggle("start");
     endScreen.classList.toggle("hide");
 
-    let userScore = parseInt(localStorage.getItem("userScore"));
-    finalScore.innerHTML = parseInt(`${userScore}`);
+    // let userScore = parseInt(localStorage.getItem("userScore"));
+    finalScore.innerHTML = `${userScore}`;
 
-    // ****** Currently returning as NaN ******
+    console.log(userScore);
 
 };
 
