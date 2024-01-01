@@ -21,7 +21,6 @@ let questionID = 0;
 // start button to initiate timer + first question appear
 
 function init() {
-
     // start screen to hide
     startScreen.classList.toggle("start");
     startScreen.classList.toggle("hide");
@@ -34,13 +33,12 @@ function init() {
     startTimer();
     timeRemaining();
     showQuestion();
+};
 
-}
 
 function startTimer() {
     intervalID = setInterval(timeRemaining, 1000);
-}
-
+};
 
 function timeRemaining() {
     if (countdown > 0) {
@@ -49,7 +47,24 @@ function timeRemaining() {
     } else {
         clearInterval(intervalID);
     }
-}
+
+    // BUG TO BE FIXED - countdown will freeze if an incorrect answer is selected with 4 or less seconds remaining
+
+    if (countdown == 0) {
+        showEndScreen();
+        clearInterval(intervalID);
+        userScore = countdown;
+    }
+};
+
+function stopCountdown() {
+    if (questionID === questionList.length - 1) {
+        clearInterval(intervalID);
+    }
+    userScore = countdown; 
+    // The line above has been repeated (see 58) and may be best placed within a saveUserScore function
+};
+
 
 function showQuestion() {
 
@@ -74,9 +89,7 @@ function showQuestion() {
 
         choiceButton.addEventListener("click", checkAnswer);
     }
-
-}
-
+};
 
 function checkAnswer(event) {
     let button = event.target;
@@ -94,9 +107,9 @@ function checkAnswer(event) {
         countdown -= 4;
     };
 
+    // ****** Check TimeRemaining function for bug with time being removed ******
     
 };
-
 
 function nextQuestion() {
     if (questionID < questionList.length - 1) {
@@ -108,7 +121,20 @@ function nextQuestion() {
         // console.log("You have completetd the quiz");
         // The action within this else statement will need to be replaced with a function that shows the end screen
         showEndScreen();
+        stopCountdown();
     }
+};
+
+function showEndScreen() {
+
+    // question title to hide  
+    questionScreen.classList.toggle("hide")
+    questionScreen.classList.toggle("start")
+
+    // start screen to show
+    endScreen.classList.toggle("start")
+    endScreen.classList.toggle("hide")
+
 };
 
 
@@ -129,19 +155,7 @@ function nextQuestion() {
 
 
 
-// quiz end displays score and allows user to enter intials
 
-function showEndScreen() {
-
-    // question title to hide  
-    questionScreen.classList.toggle("hide")
-    questionScreen.classList.toggle("start")
-
-    // start screen to show
-    endScreen.classList.toggle("start")
-    endScreen.classList.toggle("hide")
-
-}
 
 
 // saved initials and scores saved in local storage -> score.js file for score page logic
