@@ -6,13 +6,15 @@ startButton.addEventListener("click", init);
 let startScreen = document.querySelector("#start-screen");
 let questionScreen = document.querySelector("#questions");
 let endScreen = document.querySelector("#end-screen");
+let feedback = document.querySelector("#feedback")
 
 let timer = document.querySelector("#time");
 let countdown = 10;
 let intervalID;
-let choiceBox = document.querySelector('#choices');
+let choiceBox = document.querySelector("#choices");
 let userScore = 0;
 let questionID = 0;
+let finalScore = document.querySelector("#final-score");
 
 
 // function list
@@ -61,7 +63,9 @@ function stopCountdown() {
     if (questionID === questionList.length - 1) {
         clearInterval(intervalID);
     }
-    userScore = countdown; 
+
+    localStorage.setItem("userScore", countdown);
+
     // The line above has been repeated (see 58) and may be best placed within a saveUserScore function
 };
 
@@ -100,10 +104,11 @@ function checkAnswer(event) {
     console.log(correctID);
 
     if (choiceID === correctID) {
-        console.log("That is correct!")
+        console.log("That is correct!");
         nextQuestion();
+
     } else {
-        console.log("That is incorrect.")
+        console.log("That is incorrect.");
         countdown -= 4;
     };
 
@@ -111,15 +116,25 @@ function checkAnswer(event) {
     
 };
 
+
+function showCorrect() {
+    feedback.classList.toggle("hide");
+    feedback.textContent = "Correct!";
+    // ****** This should show on the screen for 1-2 seconds. ******
+}
+
+function showWrong() {
+    feedback.classList.toggle("hide");
+    feedback.textContent = "Wrong!";
+    // ****** This should show on the screen for 1-2 seconds. ******
+}
+
+
 function nextQuestion() {
     if (questionID < questionList.length - 1) {
         questionID++;
         showQuestion();
     } else {
-        // document.querySelector("#question-title").textContent = "You have completed the quiz";
-        // choiceBox.textContent = " ";
-        // console.log("You have completetd the quiz");
-        // The action within this else statement will need to be replaced with a function that shows the end screen
         showEndScreen();
         stopCountdown();
     }
@@ -128,12 +143,17 @@ function nextQuestion() {
 function showEndScreen() {
 
     // question title to hide  
-    questionScreen.classList.toggle("hide")
-    questionScreen.classList.toggle("start")
+    questionScreen.classList.toggle("hide");
+    questionScreen.classList.toggle("start");
 
     // start screen to show
-    endScreen.classList.toggle("start")
-    endScreen.classList.toggle("hide")
+    endScreen.classList.toggle("start");
+    endScreen.classList.toggle("hide");
+
+    let userScore = parseInt(localStorage.getItem("userScore"));
+    finalScore.innerHTML = parseInt(`${userScore}`);
+
+    // ****** Currently returning as NaN ******
 
 };
 
