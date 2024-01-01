@@ -16,6 +16,9 @@ let userScore = 0;
 let questionID = 0;
 let finalScore = document.querySelector("#final-score");
 
+let submitButton = document.querySelector('#submit');
+submitButton.addEventListener("click", submitScore);
+
 
 // function list
 
@@ -152,29 +155,18 @@ function showEndScreen() {
     // let userScore = parseInt(localStorage.getItem("userScore"));
     finalScore.innerHTML = `${userScore}`;
 
-    console.log(userScore);
-
 };
 
 
-// choice button clicks to verify choice and show next question
-
-    // listen for when choice is clicked
-
-    // if correct choice clicked will add to score
-
-    // if incorrect will reduce timer by X
-
-    // will show user next question
-
-    // if incorrect answer subtract time
-
-// quiz end at question.length end or timer === 0
-
-
-
-
-
-
-
 // saved initials and scores saved in local storage -> score.js file for score page logic
+
+function submitScore() {
+    let userName = document.querySelector("#initials").value;
+    localStorage.setItem(userName, userScore);
+    window.location.href = "highscores.html";
+};
+
+
+
+
+
