@@ -6,7 +6,7 @@ startButton.addEventListener("click", init);
 let startScreen = document.querySelector("#start-screen");
 let questionScreen = document.querySelector("#questions");
 let endScreen = document.querySelector("#end-screen");
-let feedback = document.querySelector("#feedback")
+let feedback = document.querySelector("#feedback");
 
 let timer = document.querySelector("#time");
 let countdown = 10;
@@ -18,6 +18,8 @@ let finalScore = document.querySelector("#final-score");
 
 let submitButton = document.querySelector('#submit');
 submitButton.addEventListener("click", submitScore);
+
+let scoresList = document.querySelector("#highscores");
 
 
 // function list
@@ -164,6 +166,10 @@ function submitScore() {
     let userName = document.querySelector("#initials").value;
     localStorage.setItem(userName, userScore);
     window.location.href = "highscores.html";
+
+    let newScore = document.createElement("li");
+    newScore.textContent = (`${userName} ${userScore}`);
+    document.querySelector("#highscores").appendChild(newScore);
 };
 
 
