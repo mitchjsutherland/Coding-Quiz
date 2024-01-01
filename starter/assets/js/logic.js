@@ -23,12 +23,12 @@ let questionID = 0;
 function init() {
 
     // start screen to hide
-    startScreen.classList.toggle("start")
-    startScreen.classList.toggle("hide")
+    startScreen.classList.toggle("start");
+    startScreen.classList.toggle("hide");
 
     // question title to appear  
-    questionScreen.classList.toggle("hide")
-    questionScreen.classList.toggle("start")
+    questionScreen.classList.toggle("hide");
+    questionScreen.classList.toggle("start");
 
     // start time
     startTimer();
@@ -74,18 +74,9 @@ function showQuestion() {
 
         choiceButton.addEventListener("click", checkAnswer);
     }
+
 }
 
-function nextQuestion() {
-    if (questionID < questionList.length - 1) {
-        questionID++;
-        showQuestion();
-    } else {
-        document.querySelector("#question-title").textContent = "You have completed the quiz";
-        choiceBox.textContent = " ";
-        console.log("You have completetd the quiz");
-    }
-};
 
 function checkAnswer(event) {
     let button = event.target;
@@ -97,23 +88,31 @@ function checkAnswer(event) {
 
     if (choiceID === correctID) {
         console.log("That is correct!")
-        // add point to score
-        userScore += 1;
-        // show next question
-
+        nextQuestion();
     } else {
         console.log("That is incorrect.")
-        // deduct time from time remaining
         countdown -= 4;
-        // show next question
     };
 
-    nextQuestion();
+    
+};
+
+
+function nextQuestion() {
+    if (questionID < questionList.length - 1) {
+        questionID++;
+        showQuestion();
+    } else {
+        // document.querySelector("#question-title").textContent = "You have completed the quiz";
+        // choiceBox.textContent = " ";
+        // console.log("You have completetd the quiz");
+        // The action within this else statement will need to be replaced with a function that shows the end screen
+        showEndScreen();
+    }
 };
 
 
 // choice button clicks to verify choice and show next question
-
 
     // listen for when choice is clicked
 
@@ -123,14 +122,7 @@ function checkAnswer(event) {
 
     // will show user next question
 
-
-
-
-
     // if incorrect answer subtract time
-
-
-
 
 // quiz end at question.length end or timer === 0
 
@@ -139,6 +131,17 @@ function checkAnswer(event) {
 
 // quiz end displays score and allows user to enter intials
 
+function showEndScreen() {
+
+    // question title to hide  
+    questionScreen.classList.toggle("hide")
+    questionScreen.classList.toggle("start")
+
+    // start screen to show
+    endScreen.classList.toggle("start")
+    endScreen.classList.toggle("hide")
+
+}
 
 
 // saved initials and scores saved in local storage -> score.js file for score page logic
