@@ -166,6 +166,7 @@ function showEndScreen() {
     // let userScore = parseInt(localStorage.getItem("userScore"));
     finalScore.innerHTML = `${userScore}`;
 
+
 };
 
 
@@ -176,9 +177,11 @@ function submitScore() {
     localStorage.setItem(userName, userScore);
     window.location.href = "highscores.html";
 
-    let newScore = document.createElement("li");
-    newScore.textContent = (`${userName} ${userScore}`);
-    document.querySelector("#highscores").appendChild(newScore);
+
+    // This may need to be moved to the scores.js sheet
+    // let newScore = document.createElement("li");
+    // newScore.textContent = (`${userName} ${userScore}`);
+    // document.querySelector("#highscores").appendChild(newScore);
 };
 
 
