@@ -1,6 +1,6 @@
 // GLOBAL VARIABLES ------------------------------------------------------------------------------------------------------*
 
-let countdown = 10;
+let countdown = 15;
 let intervalID;
 let userScore = 0;
 let questionID = 0;
