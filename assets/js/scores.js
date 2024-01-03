@@ -1,3 +1,12 @@
+// TARGETED VARIABLES
+
+let clearButton = document.querySelector("#clear");
+clearButton.addEventListener("click", clearScores);
+
+
+
+// FUNCTION LIST
+
 // Get score from local storage
 
 function loadScores() {
@@ -14,11 +23,21 @@ function loadScores() {
 
         document.querySelector("#highscores").appendChild(newScore)
 
-        // console.log(localStorage.getItem(localStorage.key(i)));
-      }
+  
+    }
 
 ;
-
 }
 
 loadScores();
+
+
+// Clear all highscores
+
+// function that removes all items from local storage
+
+function clearScores() {
+    let scoreList = document.getElementById('highscores');
+    scoreList.innerHTML = " ";
+    localStorage.clear();
+};
